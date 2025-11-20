@@ -57,7 +57,7 @@ Below are all CLI options supported by `run_adme`, exactly as defined in `parse_
 - For `--descriptor mpnn`, Chemprop-based MPNN model is used.
 - For `--descriptor maccs`, MACCS+FCN neural network is used.
 
-## 📁 Data Format
+## Data Format
 
 This tool expects input datasets in **CSV format**.  
 Depending on the task (`train`, `tune`, `predict`), the required columns differ.
@@ -73,13 +73,14 @@ For `--task train` and `--task tune`, your CSV **must include both**:
 | `--smiles_col` (default: `Drug`) | SMILES string for the molecule. |
 | `--target_col` (default: `Y`) | Experimental ADME value (float). |
 
-#### ✅ Example (`dataset/caco2_train.csv`)
+#### Example (`dataset/caco2_train.csv`)
 
 ```csv
 Drug,Y
 CC(=O)OC1=CC=CC=C1C(=O)O,-4.57
 CCN(CC)CCCC(C)NC1=NC2=CC=CC=C2N1,-5.49
 CCOC(=O)c1ccc(O)cc1,-4.92
+```
 
 ## Prediction data
 Only SMILES column is required.
@@ -111,7 +112,7 @@ run_adme \
   --epochs 5
 ```
 
-## This Mode:
+### This Mode:
 - Reads training data from `--data_dir` if provided, or uses the default dataset specified in your code
 - Uses MACCS fingerprints (`-d maccs`) unless `mpnn` is selected
 - Automatically performs a train/validation/test split:
@@ -119,3 +120,7 @@ run_adme \
     - *random* if `--split_method random`
 - Trains a regression model for the selected property (`-p`)
 - Saves the trained model checkpoint
+
+## 2. Fine-tune an Existing Pretrained Model (Transfer Learning)
+Use this to adapt a pretrained ADME model (e.g., from public data) to a small project-specific dataset.
+
