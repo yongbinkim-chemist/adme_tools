@@ -189,5 +189,7 @@ and should be treated as an evolving codebase rather than a finalized library.
 
 ## Author
 Yongbin Kim
+
 Email: `chem.yongbin@gmail.com`
+
 Description: Tools for computational ADME prediction (MACCS + FCN, Chemprop MPNN, PyTorch Lightning).
