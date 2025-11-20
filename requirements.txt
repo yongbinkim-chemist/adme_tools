@@ -1,0 +1,11 @@
+rdkit
+matplotlib
+pytorch
+pandas
+numpy
+pytorch-lightning
+joblib
+tqdm
+PyTDC
+chemprop
+tensorboard

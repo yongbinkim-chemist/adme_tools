@@ -1,0 +1,29 @@
+# conda env create -f environment.yml
+name: my-rhino-env
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+
+variables:
+  KMP_DUPLICATE_LIB_OK: "TRUE"
+  OMP_NUM_THREADS: "1"
+
+dependencies:
+  - python=3.12
+  - pip
+  - rdkit
+  - pytorch
+  - torchvision
+  - torchaudio
+  - pandas
+  - numpy
+  - scikit-learn
+  - matplotlib
+  - pytorch-lightning
+  - joblib
+  - tqdm
+  - pip:
+      - PyTDC
+      - chemprop
+      - tensorboard
