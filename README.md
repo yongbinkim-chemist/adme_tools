@@ -56,3 +56,65 @@ Below are all CLI options supported by `run_adme`, exactly as defined in `parse_
 - When `--task tune` or `--task predict`, both `--param_dir` and `--data_dir` must be provided.
 - For `--descriptor mpnn`, Chemprop-based MPNN model is used.
 - For `--descriptor maccs`, MACCS+FCN neural network is used.
+
+## 📁 Data Format
+
+This tool expects input datasets in **CSV format**.  
+Depending on the task (`train`, `tune`, `predict`), the required columns differ.
+
+---
+
+### Training / Fine-tuning Data
+
+For `--task train` and `--task tune`, your CSV **must include both**:
+
+| Column | Description |
+|--------|-------------|
+| `--smiles_col` (default: `Drug`) | SMILES string for the molecule. |
+| `--target_col` (default: `Y`) | Experimental ADME value (float). |
+
+#### ✅ Example (`dataset/caco2_train.csv`)
+
+```csv
+Drug,Y
+CC(=O)OC1=CC=CC=C1C(=O)O,-4.57
+CCN(CC)CCCC(C)NC1=NC2=CC=CC=C2N1,-5.49
+CCOC(=O)c1ccc(O)cc1,-4.92
+
+## Prediction data
+Only SMILES column is required.
+
+## Example Usage
+
+This section shows how to use the `run_adme` command for:
+- **Training** a new ADME model  
+- **Fine-tuning** a pretrained model  
+- **Predicting** ADME properties for new molecules  
+
+All explanations, bullets, and descriptions below are fully included.
+
+---
+
+## 1. Train a New ADME Model from Scratch
+
+This command trains a MACCS-based neural network to predict the `Caco2_Wang` property:
+
+```bash
+run_adme \
+  -p Caco2_Wang \
+  -t train \
+  -d maccs \
+  -lr 0.01 \
+  --smiles_col Drug \
+  --target_col Y \
+  --batch 16 \
+  --epochs 5
+
+## This Mode:
+- Reads training data from `--data_dir` if provided, or uses the default dataset specified in your code
+- Uses MACCS fingerprints (`-d maccs`) unless `mpnn` is selected
+- Automatically performs a train/validation/test split:
+    - *scaffold (default)* or
+    - *random* if `--split_method random`
+- Trains a regression model for the selected property (`-p`)
+- Saves the trained model checkpoint
