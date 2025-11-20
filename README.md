@@ -124,3 +124,70 @@ run_adme \
 ## 2. Fine-tune an Existing Pretrained Model (Transfer Learning)
 Use this to adapt a pretrained ADME model (e.g., from public data) to a small project-specific dataset.
 
+```bash
+run_adme \
+  -p Caco2_Wang \
+  -t tune \
+  -d maccs \
+  -lr 0.01 \
+  --smiles_col Drug \
+  --batch 16 \
+  --epochs 5 \
+  -pd models/maccs.pth \
+  -data dataset/caco2_valid.csv
+```
+### This mode:
+- Re-runs training using the new dataset while initializing parameters from the pretrained model.
+- Useful for:
+    - project-specific chemical series
+    - new in-house ADME assays
+    - small datasets requiring transfer learning
+Requirements for this mode:
+
+| Argument | Description |
+|----------|-------------|
+| `-pd / --param_dir` | Path to existing model checkpoint (`.pth`) used for tuning or prediction. |
+| `-data / --data_dir` | Path to input CSV file (for training, tuning, or prediction). |
+
+## 3. Run Prediction on New Molecules
+This command loads a trained/fine-tuned model and predicts ADME properties for new SMILES.
+
+```bash
+run_adme \
+  -p Caco2_Wang \
+  -t predict \
+  -d maccs \
+  --smiles_col Drug \
+  -pd models/maccs-tuned.pth \
+  -data dataset/caco2_test.csv
+```
+
+### This mode:
+- Loads the model checkpoint from `--param_dir`
+- Reads SMILES from `--data_dir`
+- Converts each molecule to MACCS or MPNN features
+- Predicts the ADME property specified by `--property`
+- Outputs predictions into a CSV file (if implemented in your pipeline)
+- Target values (`Y`) in the dataset are ignored for prediction mode
+
+## ⚠️Prototype Notice
+
+This project is still in an **early prototype stage**.  
+Many components—including data loaders, training pipelines, logging, model saving/loading,  
+and MPNN integration—are under active development and will continue to evolve.
+
+Please be aware of the following:
+
+- The codebase is **not yet fully optimized** for robustness, scalability, or production use.
+- Additional ADME endpoints, descriptors, and model architectures will be added in future updates.
+- Error handling, documentation, and CLI behaviors may change as the project matures.
+- Certain features (e.g., checkpoint saving, result reporting, hyperparameter tuning, and Chemprop integration) may be **incomplete** or require further refinement.
+- Contributions, issues, and feedback are welcome as the toolkit continues to grow.
+
+This repository is intended as a **working prototype** to support ongoing ADME/ML research and experimentation,  
+and should be treated as an evolving codebase rather than a finalized library.
+
+## Author
+Yongbin Kim
+Email: `chem.yongbin@gmail.com`
+Description: Tools for computational ADME prediction (MACCS + FCN, Chemprop MPNN, PyTorch Lightning).
