@@ -109,6 +109,7 @@ run_adme \
   --target_col Y \
   --batch 16 \
   --epochs 5
+```
 
 ## This Mode:
 - Reads training data from `--data_dir` if provided, or uses the default dataset specified in your code
