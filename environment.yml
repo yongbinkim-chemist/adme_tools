@@ -1,4 +1,6 @@
 # conda env create -f environment.yml
+# conda remove --name my-rhino-env --all
+
 name: my-rhino-env
 channels:
   - pytorch
@@ -10,7 +12,7 @@ variables:
   OMP_NUM_THREADS: "1"
 
 dependencies:
-  - python=3.12
+  - python=3.10
   - pip
   - rdkit
   - pytorch
