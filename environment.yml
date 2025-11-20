@@ -13,19 +13,19 @@ variables:
 
 dependencies:
   - python=3.10
+  - pandas=2.1.4
   - pip
   - rdkit
   - pytorch
   - torchvision
   - torchaudio
-  - pandas
   - numpy
   - scikit-learn
   - matplotlib
-  - pytorch-lightning
   - joblib
   - tqdm
   - pip:
       - PyTDC
       - chemprop
+      - lightning
       - tensorboard
